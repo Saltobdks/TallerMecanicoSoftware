@@ -1,0 +1,2 @@
+package mx.taller.user;
+public enum Role { SUPERADMIN, ADMINISTRADOR, DUENO, GERENTE, SECRETARIA, MECANICO, CLIENTE }

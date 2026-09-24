@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3307/taller?useSSL=false&serverTimezone=UTC}
+    username: ${DB_USER:taller_app}
+    password: ${MYSQL_PASSWORD:cambia-esta-clave}
+  jpa:
+    hibernate.ddl-auto: update
+    open-in-view: false
+    properties.hibernate.format_sql: true
+app:
+  jwt-secret: ${JWT_SECRET:Q2FtYmlhRXN0ZVNlY3JldG8tMzJCeXRlcy1Nbmltbw==}
+  encryption-key: ${DATA_ENCRYPTION_KEY:Q2FtYmlhRXN0ZUNsYXZlQUVTMjU2RGVCYXNlNjQ=}
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  superadmin-email: ${SUPERADMIN_EMAIL:superadmin@taller.local}
+  superadmin-password: ${SUPERADMIN_PASSWORD:CambiaEstaClave123!}
