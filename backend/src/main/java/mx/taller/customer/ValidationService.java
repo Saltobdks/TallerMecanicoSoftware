@@ -14,6 +14,7 @@ public class ValidationService {
   private static final Pattern PHONE = Pattern.compile("^\\d{10}$");
   private static final Pattern ZIP = Pattern.compile("^\\d{5}$");
   private static final Pattern BASE64_IMAGE = Pattern.compile("^data:image/(png|jpe?g|webp);base64,[A-Za-z0-9+/=\\s]+$");
+  private static final int MAX_BASE64_IMAGE_SIZE = 20 * 1024 * 1024; // 15 MB binarios codificados en Base64.
 
   /** Valida campos personales, contacto y que edad coincida con fecha de nacimiento. */
   public List<String> validateCustomerFormat(CustomerDtos.Register data) {
@@ -22,7 +23,7 @@ public class ValidationService {
     if (hasText(data.telefonoTrabajo()) && !PHONE.matcher(data.telefonoTrabajo()).matches()) errors.add("El teléfono de trabajo debe tener 10 dígitos.");
     if (data.fechaNacimiento().isAfter(LocalDate.now())) errors.add("La fecha de nacimiento no puede ser futura.");
     else if (Period.between(data.fechaNacimiento(), LocalDate.now()).getYears() != data.edad()) errors.add("La edad no coincide con la fecha de nacimiento.");
-    if (hasText(data.fotografia()) && !isImageSource(data.fotografia())) errors.add("La fotografía debe ser una URL http(s) o una imagen Base64 válida.");
+    if (hasText(data.fotografia()) && (!isImageSource(data.fotografia()) || data.fotografia().length()>MAX_BASE64_IMAGE_SIZE)) errors.add("La fotografía debe ser PNG/JPG válida y no superar 15 MB.");
     return errors;
   }
 

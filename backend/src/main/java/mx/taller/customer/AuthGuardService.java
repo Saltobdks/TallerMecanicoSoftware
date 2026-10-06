@@ -19,4 +19,21 @@ public class AuthGuardService {
       if (!authorized) throw new AccessDeniedException("No tienes permiso para registrar clientes.");
     } catch (AccessDeniedException error) { throw error; } catch (Exception error) { throw new AccessDeniedException("Token inválido."); }
   }
+  /** Sólo superadministradores y administradores pueden crear o editar talleres. */
+  public void authorizeAdministrator(String authorization) {
+    User user = authenticatedUser(authorization);
+    if (user.getRole().name().equals("SUPERADMIN") || user.getRole().name().equals("ADMINISTRADOR")) return;
+    throw new AccessDeniedException("No tienes permiso para administrar talleres.");
+  }
+  /** Roles que pueden consultar talleres para asociar un cliente. */
+  public void authorizeCustomerManager(String authorization) { authorizeBearer(authorization); }
+  private User authenticatedUser(String authorization) {
+    if (authorization == null || !authorization.startsWith("Bearer ")) throw new AccessDeniedException("Debes iniciar sesión.");
+    try {
+      User user=users.findByEmail(jwt.subject(authorization.substring(7))).orElseThrow();
+      if (!user.isActivo()) throw new AccessDeniedException("Tu cuenta está inactiva.");
+      return user;
+    } catch (AccessDeniedException error) { throw error; }
+    catch (Exception error) { throw new AccessDeniedException("Token inválido."); }
+  }
 }

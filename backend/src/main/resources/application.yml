@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3307/taller?useSSL=false&serverTimezone=UTC}
+    url: ${DB_URL:jdbc:mysql://localhost:3308/taller?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
     username: ${DB_USER:taller_app}
     password: ${MYSQL_PASSWORD:cambia-esta-clave}
   jpa:
@@ -13,3 +13,7 @@ app:
   frontend-url: ${FRONTEND_URL:http://localhost:5173}
   superadmin-email: ${SUPERADMIN_EMAIL:superadmin@taller.local}
   superadmin-password: ${SUPERADMIN_PASSWORD:CambiaEstaClave123!}
+  address:
+    # Endpoint compatible con SEPOMEX. Puede sustituirse por COPOMEX en producción.
+    provider-url: ${ADDRESS_PROVIDER_URL:https://sepomex.icalialabs.com/api/v1/zip_codes/}
+    connect-timeout-ms: ${ADDRESS_CONNECT_TIMEOUT_MS:3000}

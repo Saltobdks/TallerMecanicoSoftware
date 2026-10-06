@@ -14,5 +14,11 @@ public final class CustomerDtos {
                          @NotBlank String telefonoPersonal, String telefonoTrabajo, @NotBlank @Email String email,
                          @Email String emailTrabajo, String fotografia, @NotNull @Valid Address address, @NotNull @Positive Long workshopId) {}
   public record Result(Long customerId, String message) {}
+  public record Update(@NotBlank @Size(max=120) String nombreCompleto, @NotBlank @Size(max=120) String contactoAlternativo,
+                       @NotNull @Min(0) @Max(130) Integer edad, @NotNull LocalDate fechaNacimiento,
+                       @NotBlank String telefonoPersonal, String telefonoTrabajo, @NotBlank @Email String email,
+                       @Email String emailTrabajo, String fotografia, @NotNull @Valid Address address, @NotNull @Positive Long workshopId) {}
+  public record Item(Long id, String nombreCompleto, String email, String telefonoPersonal, CustomerStatus estatus, Long workshopId, Address address) {}
+  public record PageResult(java.util.List<Item> content, long totalElements, int totalPages, int page, int size) {}
   private CustomerDtos() {}
 }
